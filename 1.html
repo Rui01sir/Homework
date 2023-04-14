@@ -61,14 +61,19 @@ input[type="number"] {
 	margin: 20px;
 	padding: 20px;
 	background-color: white;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 #result h2 {
 	margin-top: 0;
 }
 
-#result p {
+#resultText {
+	color: red;
+
+}
+
+#BMIText {
 	font-size: 1.2rem;
 	margin: 10px;
 }
@@ -81,24 +86,24 @@ section{
 <body>
 	<h1>BMI體重機</h1>
 	<section class="form1">
-		<label for="weight">請輸入您的體重（公斤）：</label>
+		<label for="weight">請輸入您的體重(公斤)：</label>
 		<input type="number" min="0" class="weight" required>
-		<label for="height">請輸入您的身高（公尺）：</label>
+		<label for="height">請輸入您的身高(公尺)：</label>
 		<input type="number" min="0" class="height" required>
 		<input type="submit" value="計算BMI"  class="calcualteBMI">
 	</section>
     <section class="result">
-        <h2 class="result_txt">您的BMI：</h2>
-        <p id="BmiText"></p>
-        <p id="resultText">0</p>
+        <h2>您的BMI值是：</h2>
+        <h3 id="resultText">0</h3>
+        <p id="BMIText"></p>
     </section>
     </section>
 
     <script>
-        let BmiText =document.querySelector('#BmiText');
-        BmiText.style.display="none";
-        let btn =document.querySelector('.calcualteBMI');
-        let reset =document.querySelector('.reset');
+    let BMIText =document.querySelector('#BMIText');
+        BMIText.style.display="none";
+    let btn =document.querySelector('.calcualteBMI');
+    let reset =document.querySelector('.reset');
 
 
 // BMI的計算公式
@@ -113,15 +118,15 @@ section{
         let weight =document.querySelector('.weight').value;
         let height =document.querySelector('.height').value;
         let resultText =document.querySelector('#resultText');
-        let BmiText =document.querySelector('#BmiText');
+        let BMIText =document.querySelector('#BMIText');
     
         if((weight !="" ) && (height != "")){
-            BmiText.style.display="block";
+            BMIText.style.display="block";
             resultText.innerHTML = bmi(weight,height);
-            BmiText.innerHTML =  checkBMI(bmi(weight,height));
+            BMIText.innerHTML =  checkBMI(bmi(weight,height));
         
         }else{
-            BmiText.style.display="none";
+            BMIText.style.display="none";
             alert("請輸入身高體重，謝謝！")
             return
         }
