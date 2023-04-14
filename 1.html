@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI體重機</title>
+</head>
+<style>
+    body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f2f2f2;
+}
+
+h1 {
+	text-align: center;
+	padding: 20px 0;
+	margin: 0;
+	background-color: #4c82af;
+	color: white;
+}
+
+.form1 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 20px;
+}
+
+label {
+	font-size: 1.2rem;
+	margin: 10px;
+}
+
+input[type="number"] {
+	padding: 5px;
+	border-radius: 5px;
+	border: none;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.calcualteBMI {
+	padding: 10px;
+	background-color: #4c82af;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+	margin-top: 20px;
+}
+
+.calcualteBMI:hover {
+	background-color: #70c6ff;
+}
+
+#result {
+	display: none;
+	margin: 20px;
+	padding: 20px;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#result h2 {
+	margin-top: 0;
+}
+
+#result p {
+	font-size: 1.2rem;
+	margin: 10px;
+}
+section{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+</style>
+<body>
+	<h1>BMI體重機</h1>
+	<section class="form1">
+		<label for="weight">請輸入您的體重（公斤）：</label>
+		<input type="number" min="0" class="weight" required>
+		<label for="height">請輸入您的身高（公尺）：</label>
+		<input type="number" min="0" class="height" required>
+		<input type="submit" value="計算BMI"  class="calcualteBMI">
+	</section>
+    <section class="result">
+        <h2 class="result_txt">您的BMI：</h2>
+        <p id="BmiText"></p>
+        <p id="resultText">0</p>
+    </section>
+    </section>
+
+    <script>
+        let BmiText =document.querySelector('#BmiText');
+        BmiText.style.display="none";
+        let btn =document.querySelector('.calcualteBMI');
+        let reset =document.querySelector('.reset');
+
+
+// BMI的計算公式
+    function bmi(weight,height){
+        let w = parseInt(weight);
+        let h = parseInt(height)/100;
+        let bmi = (w/(h*h)).toFixed(2);
+        return bmi;
+    }
+
+    function calculateBMI(){
+        let weight =document.querySelector('.weight').value;
+        let height =document.querySelector('.height').value;
+        let resultText =document.querySelector('#resultText');
+        let BmiText =document.querySelector('#BmiText');
+    
+        if((weight !="" ) && (height != "")){
+            BmiText.style.display="block";
+            resultText.innerHTML = bmi(weight,height);
+            BmiText.innerHTML =  checkBMI(bmi(weight,height));
+        
+        }else{
+            BmiText.style.display="none";
+            alert("請輸入身高體重，謝謝！")
+            return
+        }
+        resultText.innerHTML = bmi(weight,height);
+    }
+
+
+//BMI體位判斷
+    function checkBMI(bmi){
+        if( bmi < 18.5){
+            return "體重過輕，多吃點！"
+        }else if( bmi >=18.5 &&  bmi < 24){
+            return "體重正常，不錯繼續保持！"
+        }else if( bmi >=24 &&  bmi < 27){
+            return "體重過重，該注意嘍 ~"
+        }else if( bmi >=27 &&  bmi < 30){
+            return "輕度肥胖，站起來多走走！"
+        }else if( bmi >=30 &&  bmi < 35){
+            return "中度肥胖，快！還有希望"
+        }else if( bmi  >=35){
+            return "重度肥胖，請注意身體健康狀態！"
+        }
+    }
+
+    //監聽事件
+    btn.addEventListener('click',calculateBMI);
+    reset.addEventListener('click',undo);
+</script>
+
+</body>
+</html>
